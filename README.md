@@ -85,7 +85,21 @@ Observer umumnya menggunakan interface agar bisa menerapkan berbagai cara pembar
 
 Pakai DashMap itu lebih pas daripada Vec untuk cari Subscriber dengan URL unik karena dengan DashMap, pencarian jauh lebih cepat, hanya butuh waktu konstan, tidak peduli banyaknya data. DashMap juga dibuat untuk diakses oleh banyak thread sekaligus tanpa khawatir akan terjadi tabrakan data.
 
-3. ***When programming using Rust, we are enforced by rigorous compiler constraints to make a thread-safe program. In the case of the List of Subscribers (SUBSCRIBERS) static variable, we used the DashMap external library for thread-safe HashMap. Explain based on your understanding of design patterns, do we still need DashMap or we can implement Singleton pattern instead?*** 
+3. ***When programming using Rust, we are enforced by rigorous compiler constraints to make a thread-safe program. In the case of the List of Subscribers (SUBSCRIBERS) static variable, we used the DashMap external library for thread-safe HashMap. Explain based on your understanding of design patterns, do we still need DashMap or we can implement Singleton pattern instead?***
+
+Singleton Pattern memastikan cuma ada satu instance dari sebuah kelas dan semua bisa akses dari satu titik global, jadi kita yakin hanya ada satu variabel SUBSCRIBERS di seluruh aplikasi. Sementara itu, DashMap adalah jenis Hashmap yang bisa diakses oleh banyak thread sekaligus dengan aman, tanpa risiko benturan data atau masalah lain seputar concurrency. Kalau kita cuma pakai Hashmap standar dengan pola Singleton, aplikasi yang menggunakan banyak thread bakal rentan terhadap masalah benturan data. Jadi, untuk aplikasi BambangShop yang menggunakan banyak thread, DashMap adalah pilihan yang lebih tepat.
+
 #### Reflection Publisher-2
+1. ***In the Model-View Controller (MVC) compound pattern, there is no “Service” and “Repository”. Model in MVC covers both data storage and business logic. Explain based on your understanding of design principles, why we need to separate “Service” and “Repository” from a Model?***
+
+Dalam pola MVC, seringkali Model yang menangani terlalu banyak responsibility. Oleh karena itu, dengan memisahkan Service dan Repository dari Model, kita bisa atasi berbagai masalah dan hasilkan kode yang lebih rapi dan mudah di maintenance. Pemisahan ini sesuai dengan Prinsip Single Responsibility Principle (SRP), bikin sistem lebih terpisah dan fleksibel, dan memperbaiki kemudahan dalam pengujian serta penggunaan kembali kode.
+
+2. ***What happens if we only use the Model? Explain your imagination on how the interactions between each model (Program, Subscriber, Notification) affect the code complexity for each model?***
+
+Kalau kita cuma gunakan Model, tiap model jadi rumit dan sulit diurus karena tiap-tiap model harus tangani akses data, business logic, dan hubungan dengan model lain sendirian. Model-model ini jadi terlalu bergantung satu sama lain, sehingga perubahan di satu model bisa pengaruhi yang lain, yang bisa buat bug muncul lebih gampang. Dan ini bertentangan dengan Prinsip SRP karena satu model harus tangani banyak tugas sekaligus.
+
+3. ***Have you explored more about Postman? Tell us how this tool helps you to test your current work. Maybe you want to also list which features in Postman you are interested in or feel like it’s helpful to help your Group Project or any of your future software engineering projects.***
+
+Setelah mengeksplorasi, Postman terbukti berguna untuk tes API pada aplikasi yang kita buat, memastikan semua fungsi kerja sesuai harapan. Kita bisa atur metode HTTP buat kirim permintaan ke endpoint API dan cek respons yang diterima udah pas atau belum. Nanti, rencananya Postman bakal dipakai buat tes API, baik buat proyek kelompok maupun proyek rekayasa perangkat lunak yang lain.
 
 #### Reflection Publisher-3
