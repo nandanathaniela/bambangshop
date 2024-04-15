@@ -103,3 +103,14 @@ Kalau kita cuma gunakan Model, tiap model jadi rumit dan sulit diurus karena tia
 Setelah mengeksplorasi, Postman terbukti berguna untuk tes API pada aplikasi yang kita buat, memastikan semua fungsi kerja sesuai harapan. Kita bisa atur metode HTTP buat kirim permintaan ke endpoint API dan cek respons yang diterima udah pas atau belum. Nanti, rencananya Postman bakal dipakai buat tes API, baik buat proyek kelompok maupun proyek rekayasa perangkat lunak yang lain.
 
 #### Reflection Publisher-3
+1. ***Observer Pattern has two variations: Push model (publisher pushes data to subscribers) and Pull model (subscribers pull data from publisher). In this tutorial case, which variation of Observer Pattern that we use?***
+
+Dari model `subscriber.rs` dan log yang muncul, Observer yang dipakai di tutorial ini adalah Push Model. Ini terlihat dari notifikasi yang langsung dikirim ke subscriber setelah mereka berlangganan, yang menandakan bahwa penerbit secara aktif mengirimkan kabar tentang produk yang baru dibuat, dihapus, atau dipublikasikan. `NotificationService` melakukan ini dengan memanggil metode notifikasi yang melalui semua subscribernya untuk memberi tahu mereka. Dan dari metode pembaruan di Model Subscribe, kita bisa lihat kalau metode ini, ketika dipanggil, akan mengirim payload ke URL dari subscriber tersebut.
+
+2. ***What are the advantages and disadvantages of using the other variation of Observer Pattern for this tutorial case? (example: if you answer Q1 with Push, then imagine if we used Pull)***
+
+Kalau kita pilih model pull, subscribernyaa yang atur kapan mereka mau ambil info dari Publisher. Ini bagus karena subscriber ambil data cuma pas butuh aja, jadi sumber daya nggak terbuang sia-sia. Tapi, kekurangan model pull itu subscriber harus rajin minta update sendiri, yang bisa bikin info terbaru telat sampe kalau subscriber nggak minta-minta data sering-sering atau lagi nggak aktif. Terus, buat ngatur model pull itu sendiri juga lebih ribet dibandingkan model push, karena pelanggan kudu bikin cara sendiri buat minta data dari Publisher dan ngatur semua permintaan yang dikirim.
+
+3. ***Explain what will happen to the program if we decide to not use multi-threading in the notification process.***
+
+Kalau kita nggak pakai multi-threading, notifikasi bakal dikirim satu per satu ke subscriber, yang bisa bikin notifikasi jadi lama banget sampe ke semua subscriber. Ini bisa jadi masalah kalau ada banyak subscriber yang harus diberi tahu, karena notifikasi bakal numpuk dan jadi lama. Kalau kita pakai multi-threading, notifikasi bisa dikirim ke semua subscriber sekaligus, jadi notifikasi bakal lebih cepat dan nggak numpuk. Ini juga bisa bikin aplikasi jadi lebih responsif dan nggak terlalu terganggu sama notifikasi yang lama.
